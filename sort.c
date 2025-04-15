@@ -6,15 +6,15 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 01:51:11 by angellop          #+#    #+#             */
-/*   Updated: 2025/03/14 14:25:11 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:07:40 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int ft_is_sorted(t_stacks *stacks)
+int	ft_is_sorted(t_stacks *stacks)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < stacks->a_size - 1)
@@ -26,89 +26,64 @@ int ft_is_sorted(t_stacks *stacks)
 	return (1);
 }
 
-void ft_infra_sort(t_stacks *stacks)
+void	ft_sort_three(t_stacks *s)
 {
-	while (!ft_is_sorted(stacks) && stacks->b_size == 0)
+	if (s->a[2] != 2)
 	{
-		while (stacks->a_size > 1 && !ft_is_sorted(stacks))
-		{
-			if (stacks->a[0] < stacks->a[1])
-				ft_push(stacks, 'b');
-			else
-				ft_swap(stacks, 'a');
-		}
-		while (stacks->b_size > 0)
-		{
-			if (stacks->b[0] < stacks->b[1])
-				ft_swap(stacks, 'b');
-			ft_push(stacks, 'a');
-		}
-	}
-	ft_flush_exit(stacks, NULL);
-}
-
-static void	ft_radix_sort_stack_b(t_stacks *stacks, int b_size, int bit_size, int j)
-{
-	while (b_size-- && j <= bit_size && !ft_is_sorted(stacks))
-	{
-		if (((stacks->b[0] >> j) & 1) == 0)
-			ft_rotate(stacks, 'b');
+		if (s->a[0] == 2)
+			ft_rotate_backwards(s, 'a');
 		else
-			ft_push(stacks, 'a');
+			ft_rotate_forward(s, 'a');
 	}
-	if (ft_is_sorted(stacks))
-		while (stacks->b_size != 0)
-			ft_push(stacks, 'a');
+	if (s->a[0] > s->a[1])
+		ft_swap(s, 'a');
 }
 
-void	ft_radix_sort(t_stacks *stacks)
+void	ft_sort_four_to_five(t_stacks *s)
 {
-	int	j;
-	int	bit_size;
-	int	size;
-
-	bit_size = 0;
-	size = stacks->a_size;
-	while (size > 1 && ++bit_size)
-		size /= 2;
-	j = -1;
-	while (++j <= bit_size)
+	while (s->b_size <= 1)
 	{
-		size = stacks->a_size;
-		while (size-- && !ft_is_sorted(stacks))
-		{
-			if (((stacks->a[0] >> j) & 1) == 0)
-				ft_push(stacks, 'b');
-			else
-				ft_rotate(stacks, 'a');
-		}
-		ft_radix_sort_stack_b(stacks, stacks->b_size, bit_size, j + 1);
+		if (s->a[0] == 0 || s->a[0] == 1)
+			ft_push_b(s);
+		else
+			ft_rotate_backwards(s, 'a');
 	}
-	while (stacks->b_size != 0)
-		ft_push(stacks, 'a');
+	if (s->b[0] == 0)
+		ft_swap(s, 'b');
+	if (s->a[2] != 4)
+	{
+		if (s->a[0] == 4)
+			ft_rotate_backwards(s, 'a');
+		else
+			ft_rotate_forward(s, 'a');
+	}
+	if (s->a[0] > s->a[1])
+		ft_swap(s, 'a');
+	ft_push_a(s);
+	ft_push_a(s);
 }
 
-void ft_relative_pos_normalization(t_stacks *s)
+void	ft_relative_pos_normalization(t_stacks *s)
 {
-    int *hash;
-    int	i;
+	int	*hash;
+	int	i;
 	int	j;
 	int	k;
 
 	i = -1;
-    hash = malloc(s->a_size * sizeof(int));
-    while (++i < s->a_size)
+	hash = malloc(s->a_size * sizeof(int));
+	while (++i < s->a_size)
 		hash[i] = s->a[i];
 	i = -1;
-    while (++i < s->a_size)
-    {
+	while (++i < s->a_size)
+	{
 		j = -1;
-        k = 0;
-        while (++j < s->a_size)
-            if (s->a[i] > s->a[j])
-                k++;
-        hash[i] = k;
-    }
-    free(s->a);
+		k = 0;
+		while (++j < s->a_size)
+			if (s->a[i] > s->a[j])
+				k++;
+		hash[i] = k;
+	}
+	free(s->a);
 	s->a = hash;
 }

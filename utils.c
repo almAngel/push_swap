@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 02:16:03 by angellop          #+#    #+#             */
-/*   Updated: 2025/03/13 20:12:20 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:20:32 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ void	ft_parse_numbers(t_stacks *stacks)
 	char	**tmp;
 	int		i;
 	int		z;
+	int		num;
 
 	z = 0;
 	tmp = ft_split(stacks->args_connected, ' ');
 	i = 0;
+	num = 0;
 	while (tmp[i] && tmp[i][0])
 	{
-		stacks->a[z++] = ft_atol(tmp[i++], stacks);
-		free(tmp[i - 1]);
+		num = ft_atol(tmp, tmp[i], stacks);
+		stacks->a[z++] = num;
+		i++;
 	}
 	free(tmp);
 }
@@ -67,7 +70,7 @@ size_t	ft_word_count(const char *s, char c, size_t w_count)
 	return (w_count);
 }
 
-void ft_flush_exit(t_stacks *stacks, char *msg)
+void	ft_flush_exit(t_stacks *stacks, char *msg)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
@@ -82,30 +85,31 @@ void ft_flush_exit(t_stacks *stacks, char *msg)
 	exit(1);
 }
 
-long ft_atol(const char *str, t_stacks *stacks)
+long long	ft_atol(char **tmp, char *str, t_stacks *stacks)
 {
-	long	result;
-	int		sign;
-	int		i;
+	long long	result;
+	int			sign;
+	int			i;
 
 	result = 0;
 	sign = 1;
 	i = 0;
-	while (str[i] <= ' ')
+	while (str[i] <= 32)
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
+	if ((str[i] == '-' || str[i] == '+') && str[i++] == '-')
 			sign = -1;
-		i++;
-	}
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			ft_flush_exit(stacks, "Error\n");		
+			ft_flush_exit(stacks, "Error\n");
 		result = result * 10 + (str[i++] - '0');
 	}
-	if (result > 2147483647 || (result * sign) < -2147483648 || ft_strlen(str) > 11)
+	result *= sign;
+	free(str);
+	if (result > 2147483647 || result < -2147483648)
+	{
+		free(tmp);
 		ft_flush_exit(stacks, "Error\n");
-	return (result * sign);
+	}
+	return (result);
 }
