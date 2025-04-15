@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:15:38 by angellop          #+#    #+#             */
-/*   Updated: 2025/04/15 17:13:56 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:03:47 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static void	ft_join_args(int argc, char **argv, t_stacks *stacks)
 		return ;
 	if (argc == 2 && argv[1][0] == 0)
 		return (ft_putendl_fd("Error", 2));
-	while (++i < argc && argv[i])
+	while (++i < argc)
 	{
 		tmp = ft_strjoin(stacks->args_connected, argv[i]);
 		free(stacks->args_connected);
-		if (i != argc - 1)
+		if (i < argc - 1)
 		{
 			stacks->args_connected = ft_strjoin(tmp, " ");
 			free(tmp);
@@ -64,8 +64,6 @@ static void	ft_join_args(int argc, char **argv, t_stacks *stacks)
 		}
 	}
 	stacks->args_connected = tmp;
-	if (!stacks->args_connected)
-		ft_flush_exit(stacks, "Error\n");
 }
 
 static void	ft_args_validation(t_stacks *stacks)
@@ -83,7 +81,7 @@ static void	ft_args_validation(t_stacks *stacks)
 			|| (args[i] == '+' && args[i + 1] == ' ')
 			|| (args[i] == '-' && args[i + 1] == '\0')
 			|| (args[i] == '+' && args[i + 1] == '\0'))
-			ft_flush_exit(NULL, "Error\n");
+			ft_flush_exit(stacks, "Error\n");
 		i++;
 	}
 }
@@ -120,7 +118,8 @@ int	main(int argc, char **argv)
 		ft_swap(stacks, 'a');
 	else if (stacks->a_size == 3 && !ft_is_sorted(stacks))
 		ft_sort_three(stacks);
-	else if (stacks->a_size >= 4 && stacks->a_size <= 5 && !ft_is_sorted(stacks))
+	else if (stacks->a_size >= 4
+		&& stacks->a_size <= 5 && !ft_is_sorted(stacks))
 		ft_sort_four_to_five(stacks);
 	else
 		ft_radix_sort(stacks);

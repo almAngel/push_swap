@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 16:27:15 by angellop          #+#    #+#             */
-/*   Updated: 2025/04/15 19:12:58 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:03:05 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	**ft_split(char const *s, char c)
 	if (!words)
 	{
 		free(words);
-		return (NULL);	
+		return (NULL);
 	}
 	return (words);
 }

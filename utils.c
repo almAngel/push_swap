@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 02:16:03 by angellop          #+#    #+#             */
-/*   Updated: 2025/04/15 20:20:32 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:03:20 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ long long	ft_atol(char **tmp, char *str, t_stacks *stacks)
 	while (str[i] <= 32)
 		i++;
 	if ((str[i] == '-' || str[i] == '+') && str[i++] == '-')
-			sign = -1;
+		sign = -1;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
