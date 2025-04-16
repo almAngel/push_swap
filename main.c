@@ -6,40 +6,11 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:15:38 by angellop          #+#    #+#             */
-/*   Updated: 2025/04/15 22:03:47 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:47:13 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-// static void	ft_join_args(int argc, char **argv, t_stacks *stacks)
-// {
-// 	char	*tmp;
-// 	char	*tmp2;
-// 	int		i;
-
-// 	i = 0;
-// 	tmp2 = ft_strdup("");
-// 	if (argc == 1)
-// 	{
-// 		stacks->args_connected = tmp2;
-// 		return ;
-// 	}
-// 	while (++i < argc && argv[i])
-// 	{
-// 		tmp = ft_strjoin(tmp2, argv[i]);
-// 		free(tmp2);
-// 		if (i != argc - 1)
-// 		{
-// 			tmp2 = ft_strjoin(tmp, " ");
-// 			free(tmp);
-// 			tmp = tmp2;
-// 		}
-// 	}
-// 	stacks->args_connected = tmp;
-// 	if (!stacks->args_connected)
-// 		ft_flush_exit(stacks, "Error\n");
-// }
 
 static void	ft_join_args(int argc, char **argv, t_stacks *stacks)
 {
@@ -81,7 +52,11 @@ static void	ft_args_validation(t_stacks *stacks)
 			|| (args[i] == '+' && args[i + 1] == ' ')
 			|| (args[i] == '-' && args[i + 1] == '\0')
 			|| (args[i] == '+' && args[i + 1] == '\0'))
-			ft_flush_exit(stacks, "Error\n");
+		{
+			ft_putstr_fd("Error\n", 2);
+			free(stacks);
+			exit(1);
+		}
 		i++;
 	}
 }
