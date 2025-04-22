@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 02:16:03 by angellop          #+#    #+#             */
-/*   Updated: 2025/04/16 13:06:05 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:02:24 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ void	ft_parse_numbers(t_stacks *stacks)
 	free(tmp);
 }
 
-void	ft_check_dup(int *stack, int size)
+void	ft_check_dup(t_stacks *stacks)
 {
 	int	*i;
 	int	*j;
 
-	i = stack;
-	while (i < stack + size)
+	i = stacks->a;
+	while (i < stacks->a + stacks->a_size)
 	{
 		j = i + 1;
-		while (j < stack + size)
+		while (j < stacks->a + stacks->a_size)
 		{
 			if (*i == *j)
-				ft_flush_exit(NULL, "Error\n");
+				ft_flush_exit(stacks, "Error\n");
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 17:07:21 by angellop          #+#    #+#             */
-/*   Updated: 2025/04/15 22:00:34 by angellop         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:55:06 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		ft_flush_exit(t_stacks *stacks, char *msg);
 long long	ft_atol(char **tmp, char *str, t_stacks *stacks);
 size_t		ft_word_count(const char *s, char c, size_t w_count);
 void		ft_parse_numbers(t_stacks *stacks);
-void		ft_check_dup(int *stack, int size);
+void		ft_check_dup(t_stacks *stacks);
 void		ft_swap(t_stacks *stacks, char c);
 void		ft_rotate_backwards(t_stacks *stacks, char c);
 void		ft_rotate_forward(t_stacks *stacks, char c);
